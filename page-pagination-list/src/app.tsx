@@ -71,7 +71,7 @@ export function App() {
       console.log(data)
       return data
     },
-    // queryKey é um array onde passamos como se fosse um id para cada query http que fizermos na nossa aplicação. A lib salva em cache do navegador do user uma representação(query de dados) de cada pagina, por isso se eu tiver o mesmo id para todas as paginas, ela vai achar que não esta mudando as informações, porque ele esta pegando os mesmos caches desse id
+    // queryKey é um array onde passamos como se fosse um id para cada query http que fizermos na nossa aplicação. A lib salva em cache do navegador do user uma representação(query de dados) de cada pagina evitando requisição novamente, por isso se eu tiver o mesmo id para todas as paginas, ela vai achar que não esta mudando as informações, porque ele esta pegando os mesmos caches desse id
     // queryKey: ['get-tags']
 
     // Por isso eu passo o page como parametro, para que a cada pagina que eu for, a queryKey mude e a lib entenda que é uma nova pagina, gerando um novo cache com novas informações, sendo armazenado essas infos em cada key que foi gerada com base no numero da pagina, ex: get-tags-1, get-tags-2, get-tags-3...
