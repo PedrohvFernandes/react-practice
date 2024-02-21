@@ -65,7 +65,7 @@ export function App() {
       const data = await response.json()
 
       // Simulando um delay de 2 segundos para a requisição, para ver a realidade de uma requisição http
-      // await new Promise(resolve => setTimeout(resolve, 2000))
+      await new Promise(resolve => setTimeout(resolve, 2000))
 
       // https://transform.tools
       console.log(data)
