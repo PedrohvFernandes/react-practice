@@ -57,7 +57,7 @@ export function App() {
   const { data: tagasResponse, isLoading } = useQuery<TagResponse>({
     // Aqui é a onde eu devolvo os dados da minha query
     queryFn: async () => {
-      // Essa rota é uma rota fake que criei para simular uma requisição http. Através de um json(sever.json). Basta criar um objeto de array com objetos dentro, instalar o json-server e rodar o comando npm run server. o Array vira uma rota no caso "tags". O json-server possui um sistema de paginação. pagina 1(a quantidade de paginas vai de acordo com a quantidade que voce tiver, se eu for de 10 em 10 terei 20 paginas) e 10 itens por page
+      // Essa rota é uma rota fake que criei para simular uma requisição http. Através de um json(sever.json). Basta criar um objeto de array com objetos dentro, instalar o json-server e rodar o comando npm run server. o Array vira uma rota no caso "tags". podendo fazer um CRUD completo. O json-server possui um sistema de paginação. pagina 1(a quantidade de paginas vai de acordo com a quantidade que voce tiver, se eu for de 10 em 10 terei 20 paginas) e 10 itens por page
       // Fazendo filtro por titulo, que no caso é um campo do meu objeto
       const response = await fetch(
         `http://localhost:3333/tags?_page=${page}&_per_page=10&title=${urlFilter}`

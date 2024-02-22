@@ -20,6 +20,7 @@ import {
   TableRow
 } from './components/ui/table'
 import { Pagination } from './components/pagination'
+import { CreateTagForm } from './components/ui/create-tag-form'
 
 export interface TagResponse {
   first: number
@@ -33,6 +34,7 @@ export interface TagResponse {
 
 export interface Tag {
   title: string
+  slug: string
   amountOfVideos: number
   id: string
 }
@@ -57,7 +59,7 @@ export function App() {
 
       return data
     },
-    queryKey: [`get-tags-${page}`, urlFilter],
+    queryKey: [`get-tags`, urlFilter, page],
 
     placeholderData: keepPreviousData,
 
@@ -86,10 +88,37 @@ export function App() {
         <div className="flex items-center gap-3">
           <h1 className="text-xl font-bold">Tags</h1>
           <Dialog.Root>
-            <Button variant="primary">
-              <Plus className="size-3" />
-              Create New
-            </Button>
+            {/* 
+              O trigger é o componente que diz qual é o componente que vai abrir o meu modal. O trigger no final é um button, com isso eu passo asChild para falar que o componente dentro do trigger  deve se comportar como o componente princpal que vai abrir o modal, porque não é certo button(Trigger) dentro de um button(Button), ou seja, o trigger vai reaproveitar o button dentro dele, e não criando um novo
+            */}
+            <Dialog.Trigger asChild>
+              <Button variant="primary">
+                <Plus className="size-3" />
+                Create New
+              </Button>
+            </Dialog.Trigger>
+
+            {/*
+               Ao abrir o modal ele é enviado la para raiz-root do html: body, ele leva o conteudo dentro do portal para o mais alto nivel da hierarquia, para o modal abrir por cima de tudo. O modal é todo funcional(acessibilidade), o radix traz isso, mas é você quem personaliza seus components
+            */}
+            <Dialog.Portal>
+              <Dialog.Overlay className="fixed inset-0 bg-black/70" />
+              {/* 
+                Fixamos o conteudo na parte direita da pagina
+              */}
+              <Dialog.Content className="fixed space-y-4 p-10 right-0 top-0 bottom-0 h-screen min-w-[320px] bg-zinc-950 border-zinc-900">
+                <div className="space-y-3">
+                  <Dialog.Title className="text-xl font-bold">
+                    Create Tag
+                  </Dialog.Title>
+                  <Dialog.Description className="text-sm text-zinc-500">
+                    Tags can be used to group video about similar concepts
+                  </Dialog.Description>
+                </div>
+
+                <CreateTagForm />
+              </Dialog.Content>
+            </Dialog.Portal>
           </Dialog.Root>
         </div>
 
@@ -134,10 +163,11 @@ export function App() {
                   <TableCell>
                     <div className="flex flex-col gap-0.5">
                       <span className="font-medium">{tag.title}</span>
-                      <span className="text-xs text-zinc-500">{tag.id}</span>
+                      <span className="text-xs text-zinc-500">{tag.slug}</span>
                     </div>
                   </TableCell>
                   <TableCell className="text-zinc-300">
+                    {tag.amountOfVideos}{' '}
                     {tag.amountOfVideos > 1 ? 'videos' : 'video'}
                   </TableCell>
                   <TableCell className="text-right">
